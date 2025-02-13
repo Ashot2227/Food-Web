@@ -1,0 +1,71 @@
+workspace {
+    !identifiers hierarchical
+
+    model {
+        user = person "Пользователь" "Голодный человек, который хочет узнать о ближайщих к нему ресторанах с помощью тг-бота."
+        admin = person "Администратор" "Человек, управляющий приложением и его данными."
+        system = softwareSystem "Система" {
+            s = container "Сервер"
+            data = container "База данных" "Граф всех ресторанов, информация о пользователях"{
+                tags "data"
+            }
+            bot = container "Веб-интерфейс" "Телеграмм бот"
+
+
+        }
+        user -> system.bot "Регистрация"
+        user -> system.bot "Обновление пользователя"
+        user -> system.bot "Передача геолокационных данных"
+        user -> system.bot "Запрос на взаимодействие с рейтингом"
+        user -> system.bot "Запрос на получение списка ближайших ресторанов"
+        user -> system.bot "Запрос на получение всей информации о выбранном ресторане"
+        system.bot -> user "Уведомление о скидках"
+        system.bot -> user "Уведомление о рекламе"
+
+        system.s -> system.data "Запись нового пользователя"
+        system.s -> system.data "Редактирование информации о пользователе"
+        system.s -> system.data "Редактирование информации о ресторане"
+        system.s -> system.data "Получение списка ближайших ресторанов"
+        system.s -> system.data "Получение информации о выбранном ресторане"
+
+        system.bot -> system.s "Запрос на добавление/изменение информации ресторана"
+        system.bot -> system.s "Запрос на добавление/изменение информации пользователя"
+        system.bot -> system.s "Запрос на обработку картинки"
+        system.bot -> system.s "Запрос на получение информации о ресторане"
+        system.bot -> system.s "Запрос на получение ближайших ресторанов"
+
+        system.data -> system.s "Список ближайших ресторанов"
+        system.data -> system.s "Класс выбранного ресторана"
+        system.data -> system.s "Статус изменения пользователя/ресторана"
+
+
+    }
+
+    views {
+        container system "Diagram" {
+            include *
+            autolayout lr
+        }
+
+        styles {
+            element "Element" {
+                color white
+            }
+            element "Person" {
+                background #4B0082
+                shape person
+            }
+            element "Container" {
+                background #8A2BE2
+            }
+            element "data" {
+                shape cylinder
+            }
+        }
+
+    }
+
+    configuration {
+        scope softwaresystem
+    }
+}
