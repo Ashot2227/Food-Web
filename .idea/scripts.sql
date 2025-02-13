@@ -8,7 +8,9 @@ create table public.restaurants
     longitude decimal(10, 8) not null,
     contact_phone varchar(20),
     email varchar(255),
-    average_raiting decimal(3, 2) default(0.00)
+    average_raiting decimal(3, 2) default(0.00),
+    сhildren_menu boolean,
+    parking boolean
 )
 
 --таблица с названием категорий блюд (напримерб напитки, закуски, паста и тп)
